@@ -10,6 +10,16 @@ matrix:
   include:
     # Intel, 64-bit, Little-endian
     - name: "amd64 (x86_64)"
+    # Intel, 32-bit, Little-endian
+    - name: i686
+      env:
+        - CFLAGS="-m32"
+        - SETARCH="setarch i686 --verbose --3gb"
+      before_install:
+        - sudo apt-get update -yq
+        - |-
+          sudo apt-get -yq install \
+            gcc-multilib
     # ARM, 64-bit, Little-endian
     - name: "arm64 (aarch64)"
       arch: arm64
@@ -31,7 +41,7 @@ before_script:
   - $SETARCH uname -r
   - id
   - gcc --version
-script: make $JOBS test
+script: $SETARCH make $JOBS test
 branches:
   only:
     - master

@@ -57,7 +57,7 @@ before_script:
   - dpkg --print-architecture
   - dpkg --print-foreign-architectures
   - setarch --list
-  - echo JOBS=${JOBS} ARCH=${TRAVIS_ARCH} SETARCH=${SETARCH}
+  - echo JOBS=${JOBS} TRAVIS_ARCH=${TRAVIS_ARCH} SETARCH=${SETARCH}
   - $SETARCH uname -a
   - id
   - gcc --version

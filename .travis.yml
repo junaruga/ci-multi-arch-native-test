@@ -37,15 +37,13 @@ matrix:
         - sudo apt-get update -yq
         # There is no gcc-multilib on arm64.
         # https://packages.ubuntu.com/xenial/gcc-multilib
-        # To run bin/hello, we need libc6:armhf libncurses5:armhf
-        # libstdc++6:armhf deb packages.
-        # https://askubuntu.com/questions/133389/no-such-file-or-directory-but-the-file-exists
+        # To run bin/hello, we need libc6:armhf deb package.
+        # Check `ldd bin/hello`.
+        # https://askubuntu.com/questions/133389
         - |-
           sudo apt-get -yq install \
             crossbuild-essential-armhf \
-            libc6:armhf \
-            libncurses5:armhf \
-            libstdc++6:armhf
+            libc6:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     - name: ppc64le
       arch: ppc64le

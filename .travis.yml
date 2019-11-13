@@ -17,6 +17,8 @@ matrix:
         - SETARCH="setarch i686 --verbose --3gb"
       before_install:
         - sudo apt-get update -yq
+        # If you want to install some additonal dependencies,
+        # run `apt-get -yq install foo:i386`.
         - |-
           sudo apt-get -yq install \
             gcc-multilib
@@ -59,7 +61,6 @@ before_script:
   - setarch --list
   - echo JOBS=${JOBS} ARCH=${TRAVIS_ARCH} SETARCH=${SETARCH}
   - $SETARCH uname -a
-  - $SETARCH uname -r
   - id
   - gcc --version
 script:

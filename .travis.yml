@@ -23,10 +23,10 @@ matrix:
     # ARM, 64-bit, Little-endian
     - name: "arm64 (aarch64)"
       arch: arm64
-    # PowerPC, 64-bit, Little-endian
+    # IBM, PowerPC, 64-bit, Little-endian
     - name: ppc64le
       arch: ppc64le
-    # IBM Z and LinuxONE, 64-bit, Big-endian
+    # IBM, Z and LinuxONE, 64-bit, Big-endian
     - name: s390x
       arch: s390x
   allow_failures:

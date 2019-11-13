@@ -14,5 +14,6 @@ clean :
 
 test : all
 	file $(TARGET)
+	ls -l $(TARGET)
 	$(TARGET)
 .PHONY : test

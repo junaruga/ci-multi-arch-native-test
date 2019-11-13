@@ -23,6 +23,27 @@ matrix:
     # ARM, 64-bit, Little-endian
     - name: "arm64 (aarch64)"
       arch: arm64
+    # ARM, 32-bit, Little-endian
+    - name: "arm32 (armv8l)"
+      arch: arm64
+      env:
+        # https://packages.ubuntu.com/xenial/crossbuild-essential-armhf
+        - CC=arm-linux-gnueabihf-gcc
+        - SETARCH="setarch linux32 --verbose --32bit"
+      before_install:
+        - sudo dpkg --add-architecture armhf
+        - sudo apt-get update -yq
+        # There is no gcc-multilib on arm64.
+        # https://packages.ubuntu.com/xenial/gcc-multilib
+        # To run bin/hello, we need libc6:armhf libncurses5:armhf
+        # libstdc++6:armhf deb packages.
+        # https://askubuntu.com/questions/133389/no-such-file-or-directory-but-the-file-exists
+        - |-
+          sudo apt-get -yq install \
+            crossbuild-essential-armhf \
+            libc6:armhf \
+            libncurses5:armhf \
+            libstdc++6:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     - name: ppc64le
       arch: ppc64le
@@ -41,7 +62,8 @@ before_script:
   - $SETARCH uname -r
   - id
   - gcc --version
-script: $SETARCH make $JOBS test
+script:
+  - $SETARCH make $JOBS test
 branches:
   only:
     - master

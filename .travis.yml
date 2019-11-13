@@ -30,7 +30,8 @@ before_script:
   - $SETARCH uname -a
   - $SETARCH uname -r
   - id
-script: ./sample_test.sh
+  - gcc --version
+script: make test
 branches:
   only:
     - master

@@ -1,8 +1,11 @@
+CC = gcc
 TARGET = bin/hello
 
-all :
-	gcc -o $(TARGET) src/main.c
+all : $(TARGET)
 .PHONY : all
+
+$(TARGET):
+	$(CC) -o $@ src/main.c
 
 clean :
 	rm -rf src/*.o $(TARGET)

@@ -1,0 +1,36 @@
+dist: xenial
+language: c
+os: linux
+env:
+  global:
+    - NPROC="`nproc`"
+    - JOBS=-j$((1+${NPROC}))
+    - SETARCH=
+matrix:
+  include:
+    # Intel, 64-bit, Little-endian
+    - name: "amd64 (x86_64)"
+    # ARM, 64-bit, Little-endian
+    - name: "arm64 (aarch64)"
+      arch: arm64
+    # PowerPC, 64-bit, Little-endian
+    - name: ppc64le
+      arch: ppc64le
+    # IBM Z and LinuxONE, 64-bit, Big-endian
+    - name: s390x
+      arch: s390x
+  allow_failures:
+  fast_finish: true
+install: true
+before_script:
+  - dpkg --print-architecture
+  - dpkg --print-foreign-architectures
+  - setarch --list
+  - echo JOBS=${JOBS} ARCH=${TRAVIS_ARCH} SETARCH=${SETARCH}
+  - $SETARCH uname -a
+  - $SETARCH uname -r
+  - id
+script: ./sample_test.sh
+branches:
+  only:
+    - master

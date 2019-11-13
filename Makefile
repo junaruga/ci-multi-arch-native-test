@@ -1,11 +1,12 @@
-CC = gcc
+CC ?= gcc
+CFLAGS ?=
 TARGET = bin/hello
 
 all : $(TARGET)
 .PHONY : all
 
 $(TARGET):
-	$(CC) -o $@ src/main.c
+	$(CC) $(CFLAGS) -o $@ src/main.c
 
 clean :
 	rm -rf src/*.o $(TARGET)

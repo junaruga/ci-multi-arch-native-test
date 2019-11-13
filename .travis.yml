@@ -31,7 +31,7 @@ before_script:
   - $SETARCH uname -r
   - id
   - gcc --version
-script: make test
+script: make $JOBS test
 branches:
   only:
     - master

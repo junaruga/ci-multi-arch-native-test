@@ -8,7 +8,8 @@ Ruby project has some of the native multiple CPU architectures cases in Travis C
 
 ## Sister projects
 
-* [ci-multi-arch-test](https://github.com/junaruga/ci-multi-arch-test): This project has both some CIs native and emulated architecture cases.
+* [ci-multi-arch-native-container-test](https://github.com/junaruga/ci-multi-arch-native-container-test): This project is focusing native + Fedora container, without QEMU emulation.
+* [ci-multi-arch-test](https://github.com/junaruga/ci-multi-arch-test): This project has both some CIs native and QEMU emulated architecture cases.
 
 ## References
 

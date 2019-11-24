@@ -43,7 +43,7 @@ matrix:
         - |-
           sudo apt-get -yq install \
             crossbuild-essential-armhf \
-            libc6:armhf
+            libc6-dev:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     - name: ppc64le
       arch: ppc64le

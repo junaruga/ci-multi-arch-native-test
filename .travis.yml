@@ -78,6 +78,7 @@ jobs:
           packages:
             - libc6-dev
             - libc6-dev-armhf-cross
+            - libclang-dev
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -108,6 +109,7 @@ jobs:
             - clang-9
             - libc6-dev
             - libc6-dev-armhf-cross
+            - libclang-9-dev
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq

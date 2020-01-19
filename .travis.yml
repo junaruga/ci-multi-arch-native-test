@@ -89,7 +89,8 @@ jobs:
         - |-
           sudo apt-get -yq install \
             libc6:armhf \
-            libc6-dev:armhf
+            libc6-dev:armhf \
+            libc6-dev-armel:armhf
     - name: "arm32 (armv8l) - clang-9"
       dist: bionic
       arch: arm64
@@ -113,7 +114,8 @@ jobs:
         - |-
           sudo apt-get -yq install \
             libc6:armhf \
-            libc6-dev:armhf
+            libc6-dev:armhf \
+            libc6-dev-armel:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     # - name: ppc64le
     #   arch: ppc64le

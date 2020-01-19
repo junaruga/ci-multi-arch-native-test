@@ -71,7 +71,7 @@ jobs:
       # https://packages.ubuntu.com/xenial/clang
       compiler: clang
       env:
-        - CFLAGS="--target=armv8-linux-eabi"
+        - CFLAGS="-target armv8l-unknown-linux-eabihf"
         - SETARCH="setarch linux32 --verbose --32bit"
       addons:
         apt:
@@ -97,7 +97,7 @@ jobs:
       compiler: clang-9
       env:
         # http://releases.llvm.org/9.0.0/tools/clang/docs/CrossCompilation.html
-        - CFLAGS="-target armv8-linux-eabi"
+        - CFLAGS="-target armv8l-unknown-linux-eabihf"
         - SETARCH="setarch linux32 --verbose --32bit"
       addons:
         apt:

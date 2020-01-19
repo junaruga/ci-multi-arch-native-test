@@ -9,9 +9,12 @@ env:
 jobs:
   include:
     # Intel, 64-bit, Little-endian
-    - name: "amd64 (x86_64)"
+    - name: "amd64 (x86_64) - gcc"
       arch: amd64
       compiler: gcc
+    - name: "amd64 (x86_64) - clang"
+      arch: amd64
+      compiler: clang
     # Intel, 32-bit, Little-endian
     - name: i686
       arch: amd64
@@ -27,9 +30,23 @@ jobs:
           sudo apt-get -yq install \
             gcc-multilib
     # ARM, 64-bit, Little-endian
-    - name: "arm64 (aarch64)"
+    - name: "arm64 (aarch64) - gcc"
       arch: arm64
       compiler: gcc
+    - name: "arm64 (aarch64) - clang"
+      arch: arm64
+      compiler: clang
+    - name: "arm64 (aarch64) - clang-9"
+      dist: bionic
+      arch: arm64
+      compiler: clang-9
+      addons:
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+            - clang-9
     # ARM, 32-bit, Little-endian
     - name: "arm32 (armv8l)"
       arch: arm64

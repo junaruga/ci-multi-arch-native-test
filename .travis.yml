@@ -65,7 +65,8 @@ jobs:
         - |-
           sudo apt-get -yq install \
             crossbuild-essential-armhf \
-            libc6:armhf
+            libc6:armhf \
+            libgcc-5-dev:armhf
     - name: "arm32 (armv8l) - clang"
       arch: arm64
       # https://packages.ubuntu.com/xenial/clang
@@ -93,7 +94,8 @@ jobs:
           sudo apt-get -yq install \
             libc6:armhf \
             libc6-dev:armhf \
-            libc6-dev-armel:armhf
+            libc6-dev-armel:armhf \
+            libgcc-5-dev:armhf
     - name: "arm32 (armv8l) - clang-9"
       dist: bionic
       arch: arm64

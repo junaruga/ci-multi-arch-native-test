@@ -76,6 +76,7 @@ jobs:
       addons:
         apt:
           packages:
+            - libc6-dev
             - libc6-dev-armhf-cross
       before_install:
         - sudo dpkg --add-architecture armhf
@@ -104,6 +105,7 @@ jobs:
               key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
           packages:
             - clang-9
+            - libc6-dev
             - libc6-dev-armhf-cross
       before_install:
         - sudo dpkg --add-architecture armhf

@@ -1,17 +1,21 @@
 dist: xenial
-language: c
 os: linux
+language: c
 env:
   global:
     - NPROC="$(nproc)"
     - JOBS=-j$((1+${NPROC}))
     - SETARCH=
-matrix:
+jobs:
   include:
     # Intel, 64-bit, Little-endian
     - name: "amd64 (x86_64)"
+      arch: amd64
+      compiler: gcc
     # Intel, 32-bit, Little-endian
     - name: i686
+      arch: amd64
+      compiler: gcc
       env:
         - CFLAGS="-m32"
         - SETARCH="setarch i686 --verbose --3gb"
@@ -25,9 +29,11 @@ matrix:
     # ARM, 64-bit, Little-endian
     - name: "arm64 (aarch64)"
       arch: arm64
+      compiler: gcc
     # ARM, 32-bit, Little-endian
     - name: "arm32 (armv8l)"
       arch: arm64
+      compiler: gcc
       env:
         # https://packages.ubuntu.com/xenial/crossbuild-essential-armhf
         - CC=arm-linux-gnueabihf-gcc
@@ -47,9 +53,11 @@ matrix:
     # IBM, PowerPC, 64-bit, Little-endian
     - name: ppc64le
       arch: ppc64le
+      compiler: gcc
     # IBM, Z and LinuxONE, 64-bit, Big-endian
     - name: s390x
       arch: s390x
+      compiler: gcc
   allow_failures:
   fast_finish: true
 install: true
@@ -57,7 +65,7 @@ before_script:
   - dpkg --print-architecture
   - dpkg --print-foreign-architectures
   - setarch --list
-  - echo JOBS=${JOBS} TRAVIS_CPU_ARCH=${TRAVIS_CPU_ARCH} SETARCH=${SETARCH}
+  - echo JOBS=${JOBS} TRAVIS_CPU_ARCH=${TRAVIS_CPU_ARCH} SETARCH=${SETARCH} CC=${CC}
   - $SETARCH uname -a
   - id
   - $CC --version

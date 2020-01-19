@@ -71,8 +71,12 @@ jobs:
       # https://packages.ubuntu.com/xenial/clang
       compiler: clang
       env:
-        - CFLAGS="-ccc-host-triple armv8-linux-eabi"
+        - CFLAGS="--target=armv8-linux-eabi"
         - SETARCH="setarch linux32 --verbose --32bit"
+      addons:
+        apt:
+          packages:
+            - libc6-dev-armhf-cross
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -83,7 +87,6 @@ jobs:
         # https://askubuntu.com/questions/133389
         - |-
           sudo apt-get -yq install \
-            crossbuild-essential-armhf \
             libc6:armhf
     - name: "arm32 (armv8l) - clang-9"
       dist: bionic
@@ -100,6 +103,7 @@ jobs:
               key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
           packages:
             - clang-9
+            - libc6-dev-armhf-cross
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -126,6 +130,11 @@ before_script:
   - id
   - $CC --version
   - $CC --help || true
+  - |
+    if [[ $CC =~ ^clang ]]; then
+      $CC -print-target-triple || true
+      $CC -print-effective-triple || true
+    fi
 script:
   - $SETARCH make $JOBS test
 branches:

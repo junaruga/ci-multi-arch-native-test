@@ -83,6 +83,7 @@ jobs:
             - libgcc-5-dev
             - libgcc-5-dev-armhf-cross
             - libgcc1
+            - llvm-3.8-dev
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -99,7 +100,8 @@ jobs:
             libc6-dev:armhf \
             libc6-dev-armel:armhf \
             libgcc-5-dev:armhf \
-            libgcc1:armhf
+            libgcc1:armhf \
+            llvm-3.8-dev:armhf
     - name: "arm32 (armv8l) - clang-9"
       dist: bionic
       arch: arm64
@@ -121,6 +123,7 @@ jobs:
             - libgcc-5-dev
             - libgcc-5-dev-armhf-cross
             - libgcc1
+            - llvm-9-dev
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -129,7 +132,8 @@ jobs:
             libc6:armhf \
             libc6-dev:armhf \
             libc6-dev-armel:armhf \
-            libgcc1:armhf
+            libgcc1:armhf \
+            llvm-9-dev:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     # - name: ppc64le
     #   arch: ppc64le

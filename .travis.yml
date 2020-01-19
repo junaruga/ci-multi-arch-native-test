@@ -71,6 +71,7 @@ jobs:
       # https://packages.ubuntu.com/xenial/clang
       compiler: clang
       env:
+        - CFLAGS="-ccc-host-triple armv8-linux-eabi"
         - SETARCH="setarch linux32 --verbose --32bit"
       before_install:
         - sudo dpkg --add-architecture armhf
@@ -89,6 +90,8 @@ jobs:
       arch: arm64
       compiler: clang-9
       env:
+        # http://releases.llvm.org/9.0.0/tools/clang/docs/CrossCompilation.html
+        - CFLAGS="-target armv8-linux-eabi"
         - SETARCH="setarch linux32 --verbose --32bit"
       addons:
         apt:
@@ -122,6 +125,7 @@ before_script:
   - $SETARCH uname -a
   - id
   - $CC --version
+  - $CC --help || true
 script:
   - $SETARCH make $JOBS test
 branches:

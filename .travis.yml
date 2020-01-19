@@ -82,6 +82,7 @@ jobs:
             # - libclang-dev
             - libgcc-5-dev
             - libgcc-5-dev-armhf-cross
+            - libgcc1
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -90,12 +91,15 @@ jobs:
         # To run bin/hello, we need libc6:armhf deb package.
         # Check `ldd bin/hello`.
         # https://askubuntu.com/questions/133389
+        # xenial clang = clang-3.8
+        # https://packages.ubuntu.com/xenial-updates/clang-3.8
         - |-
           sudo apt-get -yq install \
             libc6:armhf \
             libc6-dev:armhf \
             libc6-dev-armel:armhf \
-            libgcc-5-dev:armhf
+            libgcc-5-dev:armhf \
+            libgcc1:armhf
     - name: "arm32 (armv8l) - clang-9"
       dist: bionic
       arch: arm64
@@ -116,6 +120,7 @@ jobs:
             - libclang-9-dev
             - libgcc-5-dev
             - libgcc-5-dev-armhf-cross
+            - libgcc1
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
@@ -123,7 +128,8 @@ jobs:
           sudo apt-get -yq install \
             libc6:armhf \
             libc6-dev:armhf \
-            libc6-dev-armel:armhf
+            libc6-dev-armel:armhf \
+            libgcc1:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     # - name: ppc64le
     #   arch: ppc64le

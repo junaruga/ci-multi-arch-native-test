@@ -9,33 +9,33 @@ env:
 jobs:
   include:
     # Intel, 64-bit, Little-endian
-    - name: "amd64 (x86_64) - gcc"
-      arch: amd64
-      compiler: gcc
-    - name: "amd64 (x86_64) - clang"
-      arch: amd64
-      compiler: clang
+    # - name: "amd64 (x86_64) - gcc"
+    #   arch: amd64
+    #   compiler: gcc
+    # - name: "amd64 (x86_64) - clang"
+    #   arch: amd64
+    #   compiler: clang
     # Intel, 32-bit, Little-endian
-    - name: i686
-      arch: amd64
-      compiler: gcc
-      env:
-        - CFLAGS="-m32"
-        - SETARCH="setarch i686 --verbose --3gb"
-      before_install:
-        - sudo apt-get update -yq
-        # If you want to install some additonal dependencies,
-        # run `apt-get -yq install foo:i386`.
-        - |-
-          sudo apt-get -yq install \
-            gcc-multilib
+    # - name: i686
+    #   arch: amd64
+    #   compiler: gcc
+    #   env:
+    #     - CFLAGS="-m32"
+    #     - SETARCH="setarch i686 --verbose --3gb"
+    #   before_install:
+    #     - sudo apt-get update -yq
+    #     # If you want to install some additonal dependencies,
+    #     # run `apt-get -yq install foo:i386`.
+    #     - |-
+    #       sudo apt-get -yq install \
+    #         gcc-multilib
     # ARM, 64-bit, Little-endian
-    - name: "arm64 (aarch64) - gcc"
-      arch: arm64
-      compiler: gcc
-    - name: "arm64 (aarch64) - clang"
-      arch: arm64
-      compiler: clang
+    # - name: "arm64 (aarch64) - gcc"
+    #   arch: arm64
+    #   compiler: gcc
+    # - name: "arm64 (aarch64) - clang"
+    #   arch: arm64
+    #   compiler: clang
     - name: "arm64 (aarch64) - clang-9"
       dist: bionic
       arch: arm64
@@ -68,13 +68,13 @@ jobs:
             crossbuild-essential-armhf \
             libc6:armhf
     # IBM, PowerPC, 64-bit, Little-endian
-    - name: ppc64le
-      arch: ppc64le
-      compiler: gcc
+    # - name: ppc64le
+    #   arch: ppc64le
+    #   compiler: gcc
     # IBM, Z and LinuxONE, 64-bit, Big-endian
-    - name: s390x
-      arch: s390x
-      compiler: gcc
+    # - name: s390x
+    #   arch: s390x
+    #   compiler: gcc
   allow_failures:
   fast_finish: true
 install: true

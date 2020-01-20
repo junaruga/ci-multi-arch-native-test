@@ -9,33 +9,33 @@ env:
 jobs:
   include:
     # Intel, 64-bit, Little-endian
-    - name: "amd64 (x86_64) - gcc"
-      arch: amd64
-      compiler: gcc
-    - name: "amd64 (x86_64) - clang"
-      arch: amd64
-      compiler: clang
+    # - name: "amd64 (x86_64) - gcc"
+    #   arch: amd64
+    #   compiler: gcc
+    # - name: "amd64 (x86_64) - clang"
+    #   arch: amd64
+    #   compiler: clang
     # Intel, 32-bit, Little-endian
-    - name: i686
-      arch: amd64
-      compiler: gcc
-      env:
-        - CFLAGS="-m32"
-        - SETARCH="setarch i686 --verbose --3gb"
-      before_install:
-        - sudo apt-get update -yq
-        # If you want to install some additonal dependencies,
-        # run `apt-get -yq install foo:i386`.
-        - |-
-          sudo apt-get -yq install \
-            gcc-multilib
+    # - name: i686
+    #   arch: amd64
+    #   compiler: gcc
+    #   env:
+    #     - CFLAGS="-m32"
+    #     - SETARCH="setarch i686 --verbose --3gb"
+    #   before_install:
+    #     - sudo apt-get update -yq
+    #     # If you want to install some additonal dependencies,
+    #     # run `apt-get -yq install foo:i386`.
+    #     - |-
+    #       sudo apt-get -yq install \
+    #         gcc-multilib
     # ARM, 64-bit, Little-endian
-    - name: "arm64 (aarch64) - gcc"
-      arch: arm64
-      compiler: gcc
-    - name: "arm64 (aarch64) - clang"
-      arch: arm64
-      compiler: clang
+    # - name: "arm64 (aarch64) - gcc"
+    #   arch: arm64
+    #   compiler: gcc
+    # - name: "arm64 (aarch64) - clang"
+    #   arch: arm64
+    #   compiler: clang
     - name: "arm64 (aarch64) - clang-9"
       dist: bionic
       arch: arm64
@@ -48,12 +48,11 @@ jobs:
           packages:
             - clang-9
     # ARM, 32-bit, Little-endian
-    - name: "arm32 (armv8l)"
+    - name: "arm32 (armv8l) - gcc"
       arch: arm64
-      compiler: gcc
+      # https://packages.ubuntu.com/xenial/crossbuild-essential-armhf
+      compiler: arm-linux-gnueabihf-gcc
       env:
-        # https://packages.ubuntu.com/xenial/crossbuild-essential-armhf
-        - CC=arm-linux-gnueabihf-gcc
         - SETARCH="setarch linux32 --verbose --32bit"
       before_install:
         - sudo dpkg --add-architecture armhf
@@ -66,15 +65,83 @@ jobs:
         - |-
           sudo apt-get -yq install \
             crossbuild-essential-armhf \
-            libc6:armhf
+            libc6:armhf \
+            libgcc-5-dev:armhf
+    - name: "arm32 (armv8l) - clang"
+      arch: arm64
+      # https://packages.ubuntu.com/xenial/clang
+      compiler: clang
+      env:
+        - CFLAGS="-target armv8l-unknown-linux-eabihf"
+        - SETARCH="setarch linux32 --verbose --32bit"
+      addons:
+        apt:
+          packages:
+            - libc6-dev
+            - libc6-dev-armhf-cross
+            # - libclang-dev
+            - libgcc-5-dev
+            - libgcc-5-dev-armhf-cross
+            - libgcc1
+            - llvm-3.8-dev
+      before_install:
+        - sudo dpkg --add-architecture armhf
+        - sudo apt-get update -yq
+        # There is no gcc-multilib on arm64.
+        # https://packages.ubuntu.com/xenial/gcc-multilib
+        # To run bin/hello, we need libc6:armhf deb package.
+        # Check `ldd bin/hello`.
+        # https://askubuntu.com/questions/133389
+        # xenial clang = clang-3.8
+        # https://packages.ubuntu.com/xenial-updates/clang-3.8
+        - |-
+          sudo apt-get -yq install \
+            libc6:armhf \
+            libc6-dev:armhf \
+            libc6-dev-armel:armhf \
+            libgcc-5-dev:armhf \
+            libgcc1:armhf
+    - name: "arm32 (armv8l) - clang-9"
+      dist: bionic
+      arch: arm64
+      compiler: clang-9
+      env:
+        # http://releases.llvm.org/9.0.0/tools/clang/docs/CrossCompilation.html
+        - CFLAGS="-target armv8l-unknown-linux-eabihf"
+        - SETARCH="setarch linux32 --verbose --32bit"
+      addons:
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+            - clang-9
+            - libc6-dev
+            - libc6-dev-armhf-cross
+            - libclang-9-dev
+            - libgcc-5-dev
+            - libgcc-5-dev-armhf-cross
+            - libgcc1
+            - llvm-9-dev
+            - libgcc-7-dev
+      before_install:
+        - sudo dpkg --add-architecture armhf
+        - sudo apt-get update -yq
+        - |-
+          sudo apt-get -yq install \
+            libc6:armhf \
+            libc6-dev:armhf \
+            libc6-dev-armel:armhf \
+            libgcc1:armhf \
+            libgcc-7-dev:armhf
     # IBM, PowerPC, 64-bit, Little-endian
-    - name: ppc64le
-      arch: ppc64le
-      compiler: gcc
+    # - name: ppc64le
+    #   arch: ppc64le
+    #   compiler: gcc
     # IBM, Z and LinuxONE, 64-bit, Big-endian
-    - name: s390x
-      arch: s390x
-      compiler: gcc
+    # - name: s390x
+    #   arch: s390x
+    #   compiler: gcc
   allow_failures:
   fast_finish: true
 install: true
@@ -86,6 +153,12 @@ before_script:
   - $SETARCH uname -a
   - id
   - $CC --version
+  - $CC --help || true
+  - |
+    if [[ $CC =~ ^clang ]]; then
+      $CC -print-target-triple || true
+      $CC -print-effective-triple || true
+    fi
 script:
   - $SETARCH make $JOBS test
 branches:

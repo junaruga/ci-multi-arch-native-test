@@ -1,3 +1,5 @@
+# Available Linux distributions.
+# https://docs.travis-ci.com/user/reference/linux/
 dist: xenial
 os: linux
 language: c

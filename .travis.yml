@@ -82,13 +82,19 @@ jobs:
             crossbuild-essential-armhf \
             libc6:armhf
     # IBM, PowerPC, 64-bit, Little-endian
-    - name: ppc64le
+    - name: "ppc64le - gcc"
       arch: ppc64le
       compiler: gcc
+    - name: "ppc64le - clang"
+      arch: ppc64le
+      compiler: clang
     # IBM, Z and LinuxONE, 64-bit, Big-endian
-    - name: s390x
+    - name: "s390x - gcc"
       arch: s390x
       compiler: gcc
+    - name: "s390x - clang"
+      arch: s390x
+      compiler: clang
   allow_failures:
   fast_finish: true
 install: true

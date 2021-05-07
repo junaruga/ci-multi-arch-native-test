@@ -18,9 +18,13 @@ jobs:
           - os: ubuntu-20.04
             arch: i686
             env:
-              CC: gcc
+              CC: gcc-11
               CFLAGS: "-m32"
               SETARCH: "setarch i686 --verbose --3gb"
+            compiler_pkgs:
+              - gcc-11-multilib
+              - g++-11
+              - g++-11-multilib
             extra_pkgs:
               - libstdc++-8-dev:i386
               - libffi-dev:i386
@@ -41,9 +45,13 @@ jobs:
           - os: ubuntu-18.04
             arch: i686
             env:
-              CC: gcc
+              CC: gcc-11
               CFLAGS: "-m32"
               SETARCH: "setarch i686 --verbose --3gb"
+            compiler_pkgs:
+              - gcc-11-multilib
+              - g++-11
+              - g++-11-multilib
             extra_pkgs:
               - libstdc++-8-dev:i386
               - libffi-dev:i386
@@ -70,14 +78,16 @@ jobs:
       - run: dpkg --print-foreign-architectures
       - run: setarch --list
       # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      - name: Set ENV
+      - name: setenv
         run: echo "JOBS=-j$((1 + $(nproc --all)))" >> $GITHUB_ENV
       - run: echo JOBS=${JOBS} CC=${CC} SETARCH=${SETARCH}
       - run: $SETARCH uname -a
       - run: lsb_release -cs
+      - run: echo "VERSION=$(lsb_release -cs)" >> $GITHUB_ENV
+      - run: sudo cp -p assets/99${VERSION}.list /etc/apt/sources.list.d/
       - run: sudo apt-get -yq update
       # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#join
-      - run: sudo apt-get -yq install gcc-multilib ${{ join(matrix.extra_pkgs, ' ') || '' }}
+      - run: sudo apt-get -yq install ${{ join(matrix.compiler_pkgs, ' ') || '' }} ${{ join(matrix.extra_pkgs, ' ') || '' }}
       - run: id
       - run: $CC --version
       - run: $SETARCH make $JOBS test

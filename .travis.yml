@@ -25,6 +25,20 @@ jobs:
     #       sudo apt-get -yq install \
     #         gcc-multilib
     # ARM, 64-bit, Little-endian
+    # ARM Gravision 2
+    # https://blog.travis-ci.com/2020-09-11-arm-on-aws
+    # Comment out ARM Gravision 2 cases, as it seems that consumes credits
+    # as a Linux plan (10 credits per minute) as well as `arch: amd64`.
+    # - name: "arm64 (aarch64) gravision2 - gcc"
+    #   arch: arm64-graviton2
+    #   compiler: gcc
+    #   virt: lxd
+    #   group: edge
+    # - name: "arm64 (aarch64) gravision2 - clang"
+    #   arch: arm64-graviton2
+    #   compiler: clang
+    #   virt: lxd
+    #   group: edge
     - name: "arm64 (aarch64) - gcc"
       # focal is not available on arm64.
       dist: bionic
@@ -80,6 +94,10 @@ jobs:
   fast_finish: true
 install: true
 before_script:
+  # Check if the running version is intentional.
+  # It seems when `dist: foo` is not available, the different version is executed in Travis.
+  - echo TRAVIS_DIST=${TRAVIS_DIST} ACTUAL_VERSION=$(lsb_release -cs)
+  - test "$(lsb_release -cs)" = "${TRAVIS_DIST}"
   - dpkg --print-architecture
   - dpkg --print-foreign-architectures
   - setarch --list

@@ -41,13 +41,13 @@ jobs:
     #   group: edge
     - name: "arm64 (aarch64) - gcc"
       # focal is not available on arm64.
-      dist: bionic
       arch: arm64
       compiler: gcc
     - name: "arm64 (aarch64) - clang"
-      dist: bionic
       arch: arm64
       compiler: clang
+    # There is no available clang-N in llvm.org focal arm64 reposiotry.
+    # https://apt.llvm.org/focal/dists/
     # clang-10 is latest in llvm.org bionic arm64 repository.
     - name: "arm64 (aarch64) - clang-10"
       dist: bionic
@@ -63,18 +63,17 @@ jobs:
             - clang-10
     # ARM, 32-bit, Little-endian
     - name: "arm32 (armv8l)"
-      dist: bionic
       arch: arm64
       compiler: gcc
       env:
-        # https://packages.ubuntu.com/bionic/crossbuild-essential-armhf
+        # https://packages.ubuntu.com/focal/crossbuild-essential-armhf
         - CC=arm-linux-gnueabihf-gcc
         - SETARCH="setarch linux32 --verbose --32bit"
       before_install:
         - sudo dpkg --add-architecture armhf
         - sudo apt-get update -yq
         # There is no gcc-multilib on arm64.
-        # https://packages.ubuntu.com/bionic/gcc-multilib
+        # https://packages.ubuntu.com/focal/gcc-multilib
         # To run bin/hello, we need libc6:armhf deb package.
         # Check `ldd bin/hello`.
         # https://askubuntu.com/questions/133389

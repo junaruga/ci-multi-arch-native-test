@@ -10,20 +10,6 @@ env:
     - SETARCH=
 jobs:
   include:
-    # Intel, 32-bit, Little-endian
-    # - name: i686
-    #   arch: amd64
-    #   compiler: gcc
-    #   env:
-    #     - CFLAGS="-m32"
-    #     - SETARCH="setarch i686 --verbose --3gb"
-    #   before_install:
-    #     - sudo apt-get update -yq
-    #     # If you want to install some additonal dependencies,
-    #     # run `apt-get -yq install foo:i386`.
-    #     - |-
-    #       sudo apt-get -yq install \
-    #         gcc-multilib
     # ARM, 64-bit, Little-endian
     # ARM Gravision 2
     # https://blog.travis-ci.com/2020-09-11-arm-on-aws

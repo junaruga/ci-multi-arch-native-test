@@ -1,6 +1,7 @@
 # ci-multi-arch-native-test
 
-[![Build Status](https://travis-ci.com/junaruga/ci-multi-arch-native-test.svg?branch=master)](https://travis-ci.com/junaruga/ci-multi-arch-native-test)
+[![Travis Status](https://travis-ci.com/junaruga/ci-multi-arch-native-test.svg?branch=master)](https://travis-ci.com/junaruga/ci-multi-arch-native-test)
+[![GitHub Actions Build](https://github.com/junaruga/ci-multi-arch-native-test/actions/workflows/build.yml/badge.svg)](https://github.com/junaruga/ci-multi-arch-native-test/actions/workflows/build.yml)
 
 CI multiple CPU architectures test.
 This repository is focusing to test Travis CI native multiple architectures features [1].

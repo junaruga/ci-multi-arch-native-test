@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.com/junaruga/ci-multi-arch-native-test.svg?branch=master)](https://travis-ci.com/junaruga/ci-multi-arch-native-test)
 
 CI multiple CPU architectures test.
-This repository is focusing to test Travis CI native multiple architectures features. [1]
-Ruby project has some of the native multiple CPU architectures cases in Travis CI. [2]
+This repository is focusing to test Travis CI native multiple architectures features [1].
+The Travis `arch: arm64`, `arch: ppc64le`, `arch: s390x` have the free unlimited builds without credits for open source software repositories [2][3].
 
 ## Sister projects
 
@@ -14,4 +14,5 @@ Ruby project has some of the native multiple CPU architectures cases in Travis C
 ## References
 
 * [1] https://blog.travis-ci.com/2019-11-12-multi-cpu-architecture-ibm-power-ibm-z
-* [2] https://github.com/ruby/ruby
+* [2] https://docs.travis-ci.com/user/billing-overview/#partner-queue-solution
+* [3] https://bugs.ruby-lang.org/issues/17818#note-3

@@ -1,0 +1,83 @@
+name: Build
+on: [push, pull_request]
+env:
+  SETARCH: ""
+jobs:
+  build:
+    name: >-
+      ${{ matrix.os }} ${{ matrix.arch }}
+    # Available runners.
+    # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.allow-failure || false }}
+    env: ${{ matrix.env }}
+    strategy:
+      matrix:
+        include:
+          # focal
+          - os: ubuntu-20.04
+            arch: i686
+            env:
+              CC: gcc
+              CFLAGS: "-m32"
+              SETARCH: "setarch i686 --verbose --3gb"
+            extra_pkgs:
+              - libstdc++-8-dev:i386
+              - libffi-dev:i386
+              - libffi7:i386
+              - libgdbm-dev:i386
+              - libgdbm6:i386
+              - libncurses5-dev:i386
+              - libncurses5:i386
+              - libncursesw5-dev:i386
+              - libreadline-dev:i386
+              - libreadline8:i386
+              - libssl-dev:i386
+              - libssl1.1:i386
+              - linux-libc-dev:i386
+              - zlib1g-dev:i386
+              - zlib1g:i386
+          # bionic
+          - os: ubuntu-18.04
+            arch: i686
+            env:
+              CC: gcc
+              CFLAGS: "-m32"
+              SETARCH: "setarch i686 --verbose --3gb"
+            extra_pkgs:
+              - libstdc++-8-dev:i386
+              - libffi-dev:i386
+              - libffi6:i386
+              - libgdbm-dev:i386
+              - libgdbm5:i386
+              - libncurses5-dev:i386
+              - libncurses5:i386
+              - libncursesw5-dev:i386
+              - libreadline-dev:i386
+              - libreadline7:i386
+              - libssl-dev:i386
+              - libssl1.0.0:i386
+              - linux-libc-dev:i386
+              - zlib1g-dev:i386
+              - zlib1g:i386
+      # On the fail-fast: true, it cancels all in-progress jobs
+      # if any matrix job fails unlike Travis fast_finish.
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo dpkg --add-architecture i386
+      - run: dpkg --print-architecture
+      - run: dpkg --print-foreign-architectures
+      - run: setarch --list
+      # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+      - name: Set ENV
+        run: echo "JOBS=-j$((1 + $(nproc --all)))" >> $GITHUB_ENV
+      - run: echo JOBS=${JOBS} CC=${CC} SETARCH=${SETARCH}
+      - run: $SETARCH uname -a
+      - run: lsb_release -cs
+      - run: sudo apt-get -yq update
+      # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#join
+      - run: sudo apt-get -yq install gcc-multilib ${{ join(matrix.extra_pkgs, ' ') || '' }}
+      - run: id
+      - run: $CC --version
+      - run: $SETARCH make $JOBS test

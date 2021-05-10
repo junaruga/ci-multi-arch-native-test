@@ -73,10 +73,9 @@ jobs:
     # ARM, 32-bit, Little-endian
     - name: "arm32 (armv8l)"
       arch: arm64
-      compiler: gcc
+      # https://packages.ubuntu.com/focal/crossbuild-essential-armhf
+      compiler: arm-linux-gnueabihf-gcc
       env:
-        # https://packages.ubuntu.com/focal/crossbuild-essential-armhf
-        - CC=arm-linux-gnueabihf-gcc
         - SETARCH="setarch linux32 --verbose --32bit"
       install:
         - sudo dpkg --add-architecture armhf

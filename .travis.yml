@@ -111,6 +111,8 @@ before_install:
   # It seems when `dist: foo` is not available, the different version is executed in Travis.
   - echo TRAVIS_DIST=${TRAVIS_DIST} ACTUAL_VERSION=$(lsb_release -cs)
   - test "$(lsb_release -cs)" = "${TRAVIS_DIST}"
+  # Print cpu info.
+  - lscpu
   - sudo apt-get update
   - sudo apt-get install -y wget gnupg2 ca-certificates
   - |

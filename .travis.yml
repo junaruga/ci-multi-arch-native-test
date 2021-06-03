@@ -137,7 +137,5 @@ before_script:
   - $CC --version
 script:
   - $SETARCH make $JOBS test
-branches:
-  except:
-    # Enable branches except the working in progress branchs "wip/"
-    - /^wip\//
+# Enable Travis on the only managed branches or forked repositories.
+if: ((branch = master OR branch =~ /^stable_\d_\d$/) AND junaruga/ci-multi-arch-native-test) OR repo != junaruga/ci-multi-arch-native-test

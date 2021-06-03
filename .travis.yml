@@ -10,11 +10,6 @@ env:
     - SETARCH=
 
 .junaruga.ci-multi-arch-native-test.ci.matrix-definitions:
-  # Exclude the "Travis CI - Branch" build that is duplicated with "Travis CI - Pull Request" build on the pull-request timing.
-  # Enable Travis build CI on both push and
-  - &push-and-pull-request
-    if: type != pull_request
-
   - &gcc-11
     compiler: gcc-11
     install:
@@ -54,19 +49,16 @@ jobs:
     #   virt: lxd
     #   group: edge
     - name: "arm64 (aarch64) - gcc-11"
-      <<: *push-and-pull-request
       # focal is not available on arm64.
       arch: arm64
       <<: *gcc-11
     - name: "arm64 (aarch64) - clang"
-      <<: *push-and-pull-request
       arch: arm64
       compiler: clang
     # There is no available clang-N in llvm.org focal arm64 reposiotry.
     # https://apt.llvm.org/focal/dists/
     # clang-10 is latest in llvm.org bionic arm64 repository.
     - name: "arm64 (aarch64) - clang-10"
-      <<: *push-and-pull-request
       dist: bionic
       arch: arm64
       compiler: clang-10
@@ -80,7 +72,6 @@ jobs:
             - clang-10
     # ARM, 32-bit, Little-endian
     - name: "arm32 (armv8l)"
-      <<: *push-and-pull-request
       arch: arm64
       # https://packages.ubuntu.com/focal/crossbuild-essential-armhf
       compiler: arm-linux-gnueabihf-gcc
@@ -100,21 +91,17 @@ jobs:
             libc6:armhf
     # IBM, PowerPC, 64-bit, Little-endian
     - name: "ppc64le - gcc-11"
-      <<: *push-and-pull-request
       arch: ppc64le
       <<: *gcc-11
     - name: "ppc64le - clang"
-      <<: *push-and-pull-request
       arch: ppc64le
       compiler: clang
     # IBM, Z and LinuxONE, 64-bit, Big-endian
     - name: "s390x - gcc-11"
-      <<: *push-and-pull-request
       arch: s390x
       compiler: gcc
       <<: *gcc-11
     - name: "s390x - clang"
-      <<: *push-and-pull-request
       arch: s390x
       compiler: clang
   allow_failures:
@@ -150,3 +137,7 @@ before_script:
   - $CC --version
 script:
   - $SETARCH make $JOBS test
+# To enable only one Travis build CI on both push and pull-request,
+# exclude the "Travis CI - Pull-Request" build that is duplicated with
+# "Travis CI - Branch" build on the pull-request timing.
+if: type != pull_request

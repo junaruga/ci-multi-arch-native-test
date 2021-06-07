@@ -140,4 +140,4 @@ script:
 # To enable only one Travis build CI on both push and pull-request,
 # exclude the "Travis CI - Pull-Request" build that is duplicated with
 # "Travis CI - Branch" build on the pull-request timing.
-if: type != pull_request
+if: branch = master OR branch =~ /^stable_\d_\d$/ OR repo != junaruga/ci-multi-arch-native-test

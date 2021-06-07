@@ -138,4 +138,4 @@ before_script:
 script:
   - $SETARCH make $JOBS test
 # Enable Travis on the only managed branches or forked repositories.
-if: branch = master OR branch =~ /^stable_\d_\d$/ OR repo != junaruga/ci-multi-arch-native-test
+if: ((branch = master OR branch =~ /^stable_\d_\d$/) AND junaruga/ci-multi-arch-native-test) OR repo != junaruga/ci-multi-arch-native-test

@@ -41,33 +41,6 @@ jobs:
               - linux-libc-dev:i386
               - zlib1g-dev:i386
               - zlib1g:i386
-          # bionic
-          - os: ubuntu-18.04
-            arch: i686
-            env:
-              CC: gcc-11
-              CFLAGS: "-m32"
-              SETARCH: "setarch i686 --verbose --3gb"
-            compiler_pkgs:
-              - gcc-11-multilib
-              - g++-11
-              - g++-11-multilib
-            extra_pkgs:
-              - libstdc++-8-dev:i386
-              - libffi-dev:i386
-              - libffi6:i386
-              - libgdbm-dev:i386
-              - libgdbm5:i386
-              - libncurses5-dev:i386
-              - libncurses5:i386
-              - libncursesw5-dev:i386
-              - libreadline-dev:i386
-              - libreadline7:i386
-              - libssl-dev:i386
-              - libssl1.0.0:i386
-              - linux-libc-dev:i386
-              - zlib1g-dev:i386
-              - zlib1g:i386
       # On the fail-fast: true, it cancels all in-progress jobs
       # if any matrix job fails unlike Travis fast_finish.
       fail-fast: false

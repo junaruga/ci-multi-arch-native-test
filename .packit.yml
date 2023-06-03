@@ -1,6 +1,13 @@
 # The syntax document.
 # https://packit.dev/docs/configuration/
 
+# Report issues.
+# https://github.com/packit/packit/issues
+
+# Build history
+# copr-build: https://dashboard.packit.dev/pipelines
+# upstream_koji_build: https://dashboard.packit.dev/jobs/koji-builds
+
 # Dashboard description
 # https://dashboard.packit.dev/results/koji-builds/NN
 # * SRPM Build - SRPM Logs: A log to create a testing Source RPM (SRPM) package via this CI by the following commands.

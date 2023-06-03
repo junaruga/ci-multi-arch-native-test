@@ -1,0 +1,32 @@
+# The syntax document.
+# https://packit.dev/docs/configuration/
+
+# Dashboard description
+# https://dashboard.packit.dev/results/koji-builds/NN
+# * SRPM Build - SRPM Logs: A log to create a testing Source RPM (SRPM) package via this CI by the following commands.
+#   Cloning repo https://github.com/junaruga/ci-multi-arch-native-test.git
+#   $ git archive --output simde-tag.tar.gz --prefix simde-tag/ HEAD
+#   $ rpmbuild -bs --define _sourcedir . --define _srcdir . --define _specdir . --define _srcrpmdir . --define _topdir . --define _builddir . --define _rpmdir . --define _buildrootdir . test.spec
+# * Koji URL - Web URL: The CI results. You can check it if the CI fails.
+# * Build Logs - Build Logs URL: It seems the link is always not found. Please
+#   ignore this.
+
+# Used RPM spec file path.
+specfile_path: test.spec
+
+# Name in upstream package repository.
+# The default is the GitHub repository name.
+upstream_package_name: test
+
+jobs:
+  # https://packit.dev/docs/configuration/#upstream_koji_build
+  - job: upstream_koji_build
+    trigger: pull_request
+    # Run as a scratch build that means a kind of testing build.
+    scratch: true
+    # The build targets. The value is
+    # * "rawhide": Fedora rawhide is a Fedora development version like Debian
+    #   unstable.
+    # * "fNN-candidate": Fedora NN (NN: Fedora version number).
+    targets:
+      - rawhide

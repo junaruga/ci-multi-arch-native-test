@@ -37,3 +37,13 @@ jobs:
     # * "fNN-candidate": Fedora NN (NN: Fedora version number).
     targets:
       - rawhide
+  - job: copr_build
+    trigger: pull_request
+    enable_net: true
+    targets:
+      # https://packit.dev/docs/configuration/#available-copr-build-targets
+      - fedora-rawhide-x86_64
+      - fedora-rawhide-i386
+      - fedora-rawhide-aarch64
+      - fedora-rawhide-ppc64le
+      - fedora-rawhide-s390x

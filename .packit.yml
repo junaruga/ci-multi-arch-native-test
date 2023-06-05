@@ -37,7 +37,8 @@ jobs:
     # * "fNN-candidate": Fedora NN (NN: Fedora version number).
     targets:
       - rawhide
-  - job: copr_build
+  - &copr
+    job: copr_build
     trigger: pull_request
     enable_net: true
     targets:
@@ -47,3 +48,10 @@ jobs:
       - fedora-rawhide-aarch64
       - fedora-rawhide-ppc64le
       - fedora-rawhide-s390x
+
+  - <<: *copr
+    # Run on push to any branch.
+    trigger: commit
+    # Run except the "master*" branches.
+    # https://github.com/packit/packit/issues/1986
+    branch: '(?!master)'

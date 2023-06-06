@@ -1,12 +1,5 @@
-# The syntax document.
-# https://packit.dev/docs/configuration/
-
-# Report issues.
-# https://github.com/packit/packit/issues
-
-# Build history
-# copr-build: https://dashboard.packit.dev/pipelines
-# upstream_koji_build: https://dashboard.packit.dev/jobs/koji-builds
+# The document: https://packit.dev/docs/configuration
+# Report issues: https://github.com/packit/packit/issues
 
 # Dashboard description
 # https://dashboard.packit.dev/results/koji-builds/NN
@@ -26,7 +19,7 @@ specfile_path: test.spec
 upstream_package_name: test
 
 jobs:
-  # https://packit.dev/docs/configuration/#upstream_koji_build
+  # History: https://dashboard.packit.dev/jobs/koji-builds
   - job: upstream_koji_build
     trigger: pull_request
     # Run as a scratch build that means a kind of testing build.
@@ -37,6 +30,11 @@ jobs:
     # * "fNN-candidate": Fedora NN (NN: Fedora version number).
     targets:
       - rawhide
+
+  # History: https://dashboard.packit.dev/pipelines
+  # Find your own job.
+  # Check the SRPM Logs for a preparation of the test.
+  # Check the Build Logs for the test result.
   - &copr
     job: copr_build
     trigger: pull_request
